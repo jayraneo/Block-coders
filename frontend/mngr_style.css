@@ -1,0 +1,171 @@
+/* General Styles */
+body {
+    background-color: #111;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    width: 90%;
+    height: 90vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 60px;
+    height: 100vh;
+    background: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 15px 10px;
+}
+
+.sidebar h2 {
+    font-size: 16px;
+    margin: 0;
+    padding: 10px;
+}
+
+.sidebar nav {
+    margin-top: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Expand sidebar on hover */
+.sidebar:hover {
+    width: 250px;
+}
+
+.sidebar:hover a {
+    opacity: 1;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 60px;
+    transition: margin-left 0.3s ease-in-out;
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar:hover + .main-content {
+    margin-left: 250px;
+}
+
+/* Top Right Buttons */
+.top-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.profession-btn, .dark-toggle {
+    background: #444;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    background: gray;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Dashboard Grid Layout */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+/* General Card Styling */
+.card {
+    background: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Large card spans full width */
+.large {
+    grid-column: span 2;
+}
+
+/* Alerts Card */
+.alerts-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.alerts-card input {
+    width: 90%;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    background: #ddd;
+    color: #111;
+}
+
+/* Circular Buttons */
+.alert-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.alert-btn {
+    width: 30px;
+    height: 30px;
+    background: white;
+    color: black;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+
+.alert-btn:hover {
+    background: #666;
+    color: white;
+}
