@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{%static 'edu/stu_style.css'%}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <lord-icon src="https://cdn.lordicon.com/eouimtlu.json" trigger="hover" colors="primary:#ffffff"
+                style="width:60px;height:50px">
+            </lord-icon>
+            <nav>
+                <a href="stu_dashboard.html">
+                    <lord-icon class="icon" src="https://cdn.lordicon.com/cnpvyndp.json" trigger="hover"
+                        colors="primary:#ffffff" style="width:50px;height:50px">
+                    </lord-icon>
+                    <span>Home</span>
+                </a>
+                <a href="login.html">
+                    <lord-icon src="https://cdn.lordicon.com/gwvmctbb.json" trigger="hover" stroke="bold"
+                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
+                    </lord-icon>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <div class="top-right">
+                    <button class="profession-btn">PROFESSION, NAME</button>
+                    <div class="profile-pic"><img src="{%static 'edu/profile.jpg' %}"></img></div>
+                    <button class="dark-toggle">PROFESSION, NAME</button>
+                </div>
+            </header>
+
+            <div class="dashboard">
+                <div class="card">
+                    <h2>TOTAL HOURS ATTENDED IN THE CURRENT MONTH AND TILL TODAY</h2>
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="card">
+                    <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
+                    <p><span class="down">⬇</span> SPI: <strong>0.89</strong></p>
+                    <p><span class="up">⬆</span> CPI: <strong>0.87</strong></p>
+                    <p>Planned Value: <strong>$46,666.00</strong></p>
+                    <p>Earned Value: <strong>$41,579.40</strong></p>
+                </div>
+                <div class="card">
+                    <h2>Alerts</h2>
+                    <!-- <p><strong>$93,332</strong> Total budget</p>
+                    <p><strong>$48,048</strong> Actual Cost</p> -->
+                    <canvas id="gaugeChart"></canvas>
+                </div>
+                <div class="card">
+                    <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctx1 = document.getElementById("barChart").getContext("2d");
+        const ctx2 = document.getElementById("pieChart").getContext("2d");
+
+        // Get data from Django template
+        const labels = {{ labels|safe }};
+        const data = {{ data|safe }};
+        const percentages = {{ percentages|safe }};
+
+        // Bar Chart - Hours Attended
+        new Chart(ctx1, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Hours Attended (This Month)",
+                    data: data,
+                    backgroundColor: "#4A90E2"
+                }]
+            }
+        });
+
+        // Pie Chart - Attendance Percentage
+        new Chart(ctx2, {
+            type: "pie",
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: percentages,
+                    backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
+                }]
+            }
+        });
+    });
+</script>
+
+</html>
