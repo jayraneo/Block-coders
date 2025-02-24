@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="stu_style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -27,17 +26,17 @@
     /* Sidebar */
     .sidebar {
         width: 60px;
-        height: 100vh;
-        background: #2a2a40;
-        position: fixed;
-        left: 0;
-        top: 0;
-        transition: width 0.3s ease-in-out;
-        overflow: hidden;
-        white-space: nowrap;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    height: 100vh;
+    background: #2a2a40;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     }
 
     .sidebar:hover {
@@ -45,15 +44,13 @@
     }
 
     .sidebar nav {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        /* Center horizontally */
-        justify-content: center;
-        /* Center vertically */
-        height: 100%;
-        width: 100%;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    height: 100%;
+    width: 100%;
+}
 
     .sidebar nav a {
         display: flex;
@@ -100,15 +97,9 @@
     /* Dashboard Grid */
     .dashboard {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(calc(50% - 20px), 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
         padding: 20px;
-        transition: grid-template-columns 0.3s ease-in-out;
-    }
-
-    .sidebar:hover~.main-content .dashboard {
-        grid-template-columns: repeat(auto-fit, minmax(calc(45% - 20px), 1fr));
-        /* Reduce card width */
     }
 
     .card {
@@ -158,14 +149,6 @@
         justify-content: center;
         color: white;
     }
-    header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #282841;
-            padding: 15px;
-            border-radius: 10px;
-        }
 </style>
 
 <body>
@@ -208,15 +191,24 @@
         <!-- Main Content -->
         <main class="main-content">
             <div class="top-right">
+            </div>
+            <div class="dashboard">
+            </div>
+        </main>
+
+        <div class="dashboard">
+            <header>
                 <button class="profession-btn">PROFESSION, NAME</button>
                 <div class="profile-pic">Profile Pic</div>
                 <button class="dark-toggle">DARK TOGGLE</button>
-            </div>
-            <div class="dashboard">
+            </header>
+            
+            <div class="grid-container">
                 <div class="card">
                     <h2>TOTAL HOURS ATTENDED IN THE CURRENT MONTH AND TILL TODAY</h2>
                     <canvas id="barChart"></canvas>
                 </div>
+                
                 <div class="card">
                     <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
                     <p><span class="down">⬇</span> SPI: <strong>0.89</strong></p>
@@ -224,24 +216,26 @@
                     <p>Planned Value: <strong>$46,666.00</strong></p>
                     <p>Earned Value: <strong>$41,579.40</strong></p>
                 </div>
+                
                 <div class="card">
                     <h2>Alerts</h2>
                     <p><strong>$93,332</strong> Total budget</p>
                     <p><strong>$48,048</strong> Actual Cost</p>
                     <canvas id="gaugeChart"></canvas>
                 </div>
+                
                 <div class="card">
                     <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
                     <canvas id="pieChart"></canvas>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 </body>
 
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const ctx1 = document.getElementById("barChart").getContext("2d");
         new Chart(ctx1, {
             type: "bar",
@@ -259,9 +253,9 @@
         new Chart(ctx2, {
             type: "pie",
             data: {
-                labels: ["Maths", "Chemistry", "Physics", "English", "Hindi"],
+                labels: ["Planning", "Initiation", "Execution", "Monitor & Control", "Closure"],
                 datasets: [{
-                    data: [60, 13.3, 100, 50, 80],
+                    data: [60, 13.3, 100, 0, 0],
                     backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
                 }]
             }
@@ -270,3 +264,128 @@
 </script>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #13131f;
+    color: white;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 60px;
+    height: 100vh;
+    background: #2a2a40;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar:hover {
+    width: 250px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;
+    padding: 15px;
+    text-decoration: none;
+    width: 100%;
+}
+
+.sidebar nav a span {
+    display: none;
+    margin-left: 10px;
+}
+
+.sidebar:hover nav a span {
+    display: inline;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 60px;
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.sidebar:hover + .main-content {
+    margin-left: 250px;
+}
+
+/* Adjust the card grid */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(calc(50% - 20px), 1fr)); /* Adjust dynamically */
+    gap: 20px;
+    padding: 20px;
+    transition: grid-template-columns 0.3s ease-in-out;
+}
+
+.sidebar:hover ~ .main-content .dashboard {
+    grid-template-columns: repeat(auto-fit, minmax(calc(45% - 20px), 1fr)); /* Reduce card width */
+}
+
+.card {
+    background: #2a2a40;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition: width 0.3s ease-in-out;
+}
+
+.large {
+    grid-column: span 2;
+}
+
+.small {
+    width: 80%;
+    margin: auto;
+}
