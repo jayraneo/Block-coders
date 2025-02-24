@@ -1,0 +1,153 @@
+body {
+    background-color: #111;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    width: 90%;
+    height: 90vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 60px; /* Collapsed width */
+    height: 100vh;
+    background: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Sidebar items (hidden by default) */
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    opacity: 0; /* Hide text */
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Expand sidebar on hover */
+.sidebar:hover {
+    width: 250px; /* Expanded width */
+}
+
+.sidebar nav a {
+    display: block;
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Show sidebar contents on hover */
+.sidebar:hover nav a {
+    opacity: 1; /* Make text visible */
+}
+
+.main-content {
+    margin-left: 60px;
+    transition: margin-left 0.3s ease-in-out;
+    flex: 1;
+    padding: 20px;
+}
+
+.sidebar:hover + .main-content {
+    margin-left: 250px;
+}
+
+/* Main Dashboard Grid Layout */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 20px; /* Spacing between cards */
+    padding: 20px;
+}
+
+/* General Card Styling */
+.card {
+    background: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Large card spans full width */
+.large {
+    grid-column: span 2; /* Makes it take up both columns */
+}
+
+/* Small card styling (if needed for specific adjustments) */
+.small {
+    font-size: 16px;
+    padding: 15px;
+}
+
+
+/* Top Right Buttons */
+.top-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.profession-btn, .dark-toggle {
+    background: #444;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    background: gray;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Dashboard Cards */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+
+.card {
+    background: #333;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.large {
+    grid-column: span 2;
+}
+
+.small {
+    width: 80%;
+    margin: auto;
+}
