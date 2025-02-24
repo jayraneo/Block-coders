@@ -1,188 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--=============== REMIXICONS ===============-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
-    <title>Responsive login and registration form - Bedimcode</title>
+    <title>Webcam Access</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #13131f;
+            color: white;
+            margin: 20px;
+        }
+        video, canvas {
+            display: block;
+            margin: 10px auto;
+            border: 2px solid white;
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4A90E2;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #357ABD;
+        }
+    </style>
 </head>
-
 <body>
-    <!--=============== LOGIN IMAGE ===============-->
-    <svg class="login__blob" viewBox="0 0 566 840" xmlns="http://www.w3.org/2000/svg">
-        <mask id="mask0" mask-type="alpha">
-            <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
-            0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
-            591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
-            167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z" />
-        </mask>
 
-        <g mask="url(#mask0)">
-            <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
-            0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
-            591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
-            167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z" />
+    <h1>Webcam Access & Capture</h1>
 
-            <!-- Insert your image (recommended size: 1000 x 1200) -->
-            <image class="login__img" href="bg-img.jpg" />
-        </g>
-    </svg>
+    <!-- Video Stream -->
+    <video id="webcam" width="500" height="350" autoplay></video>
+    
+    <!-- Buttons -->
+    <button id="startCam">Start Camera</button>
+    <button id="stopCam">Stop Camera</button>
+    <button id="capture">Capture Image</button>
 
-    <!--=============== LOGIN ===============-->
-    <div class="login container grid" id="loginAccessRegister">
-        <!--===== LOGIN ACCESS =====-->
-        <div class="login__access">
-            <h1 class="login__title">Log in to your account.</h1>
+    <!-- Captured Image -->
+    <canvas id="canvas" width="500" height="350"></canvas>
 
-            <div class="login__area">
-                <form action="" class="login__form">
-                    <div class="login__content grid">
-                        <div class="login__box">
-                            <input type="email" id="email" required placeholder=" " class="login__input">
-                            <label for="email" class="login__label">Email</label>
-
-                            <i class="ri-mail-fill login__icon"></i>
-                        </div>
-
-                        <div class="login__box">
-                            <input type="password" id="password" required placeholder=" " class="login__input">
-                            <label for="password" class="login__label">Password</label>
-
-                            <i class="ri-eye-off-fill login__icon login__password" id="loginPassword"></i>
-                        </div>
-                    </div>
-
-                    <a href="#" class="login__forgot">Forgot your password?</a>
-
-                    <button type="submit" class="login__button">Login</button>
-                </form>
-
-                <div class="login__social">
-                    <p class="login__social-title">Or login with</p>
-
-                    <div class="login__social-links">
-                        <a href="#" class="login__social-link">
-                            <img src="icon-google.svg" alt="image" class="login__social-img">
-                        </a>
-
-                        <a href="#" class="login__social-link">
-                            <img src="icon-facebook.svg" alt="image" class="login__social-img">
-                        </a>
-
-                        <a href="#" class="login__social-link">
-                            <img src="icon-apple.svg" alt="image" class="login__social-img">
-                        </a>
-                    </div>
-                </div>
-
-                <p class="login__switch">
-                    Don't have an account?
-                    <button id="loginButtonRegister">Create Account</button>
-                </p>
-            </div>
-        </div>
-
-        <!--===== LOGIN REGISTER =====-->
-        <div class="login__register">
-            <h1 class="login__title">Create new account.</h1>
-
-            <div class="login__area">
-                <form action="" class="login__form">
-                    <div class="login__content grid">
-                        <div class="login__group grid">
-                            <div class="login__box">
-                                <input type="text" id="names" required placeholder=" " class="login__input">
-                                <label for="names" class="login__label">Names</label>
-
-                                <i class="ri-id-card-fill login__icon"></i>
-                            </div>
-
-                            <div class="login__box">
-                                <input type="text" id="surnames" required placeholder=" " class="login__input">
-                                <label for="surnames" class="login__label">Surnames</label>
-
-                                <i class="ri-id-card-fill login__icon"></i>
-                            </div>
-                        </div>
-
-                        <div class="login__box">
-                            <input type="email" id="emailCreate" required placeholder=" " class="login__input">
-                            <label for="emailCreate" class="login__label">Email</label>
-
-                            <i class="ri-mail-fill login__icon"></i>
-                        </div>
-
-                        <div class="login__box">
-                            <input type="password" id="passwordCreate" required placeholder=" " class="login__input">
-                            <label for="passwordCreate" class="login__label">Password</label>
-
-                            <i class="ri-eye-off-fill login__icon login__password" id="loginPasswordCreate"></i>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="login__button">Create account</button>
-                </form>
-
-                <p class="login__switch">
-                    Already have an account?
-                    <button id="loginButtonAccess">Log In</button>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!--=============== MAIN JS ===============-->
     <script>
-        /*=============== SHOW HIDE PASSWORD LOGIN ===============*/
-        const passwordAccess = (loginPass, loginEye) => {
-            const input = document.getElementById(loginPass),
-                iconEye = document.getElementById(loginEye)
+        const video = document.getElementById("webcam");
+        const startBtn = document.getElementById("startCam");
+        const stopBtn = document.getElementById("stopCam");
+        const captureBtn = document.getElementById("capture");
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        let stream = null;
 
-            iconEye.addEventListener('click', () => {
-                // Change password to text
-                input.type === 'password' ? input.type = 'text'
-                    : input.type = 'password'
+        // Start Webcam
+        startBtn.addEventListener("click", async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (error) {
+                console.error("Error accessing webcam:", error);
+                alert("Error accessing webcam! Make sure it's not being used by another application.");
+            }
+        });
 
-                // Icon change
-                iconEye.classList.toggle('ri-eye-fill')
-                iconEye.classList.toggle('ri-eye-off-fill')
-            })
-        }
-        passwordAccess('password', 'loginPassword')
+        // Stop Webcam
+        stopBtn.addEventListener("click", () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+            }
+        });
 
-        /*=============== SHOW HIDE PASSWORD CREATE ACCOUNT ===============*/
-        const passwordRegister = (loginPass, loginEye) => {
-            const input = document.getElementById(loginPass),
-                iconEye = document.getElementById(loginEye)
-
-            iconEye.addEventListener('click', () => {
-                // Change password to text
-                input.type === 'password' ? input.type = 'text'
-                    : input.type = 'password'
-
-                // Icon change
-                iconEye.classList.toggle('ri-eye-fill')
-                iconEye.classList.toggle('ri-eye-off-fill')
-            })
-        }
-        passwordRegister('passwordCreate', 'loginPasswordCreate')
-
-        /*=============== SHOW HIDE LOGIN & CREATE ACCOUNT ===============*/
-        const loginAcessRegister = document.getElementById('loginAccessRegister'),
-            buttonRegister = document.getElementById('loginButtonRegister'),
-            buttonAccess = document.getElementById('loginButtonAccess')
-
-        buttonRegister.addEventListener('click', () => {
-            loginAcessRegister.classList.add('active')
-        })
-
-        buttonAccess.addEventListener('click', () => {
-            loginAcessRegister.classList.remove('active')
-        })
+        // Capture Image
+        captureBtn.addEventListener("click", () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        });
     </script>
-</body>
 
+</body>
 </html>
