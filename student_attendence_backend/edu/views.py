@@ -50,8 +50,10 @@ def student_dashboard(request):
     })
 
 
-
-
 @login_required
 def teacher_dashboard(request):
     return render(request, 'edu/tchr_dashboard.html')
+
+@login_required
+def stu_add(request):
+    return render(request, 'edu/new_stu_details.html')
