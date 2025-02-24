@@ -4,388 +4,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!--=============== REMIXICONS ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <title>Responsive login and registration form - Bedimcode</title>
 </head>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #13131f;
-        color: white;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        display: flex;
-        width: 90%;
-        height: 90vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-        width: 60px;
-    height: 100vh;
-    background: #2a2a40;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: width 0.3s ease-in-out;
-    overflow: hidden;
-    white-space: nowrap;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    }
-
-    .sidebar:hover {
-        width: 250px;
-    }
-
-    .sidebar nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;  /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    height: 100%;
-    width: 100%;
-}
-
-    .sidebar nav a {
-        display: flex;
-        align-items: center;
-        color: white;
-        justify-content: center;
-        padding: 15px;
-        text-decoration: none;
-        opacity: 1;
-        transition: opacity 0.3s ease-in-out;
-        width: 100%;
-    }
-
-    .sidebar:hover nav a {
-        opacity: 1;
-    }
-
-    .sidebar nav a span {
-        display: none;
-        margin-left: 10px;
-    }
-
-    .sidebar:hover nav a span {
-        display: inline;
-    }
-
-    .sidebar nav a .icon {
-        width: 50px;
-        height: 50px;
-    }
-
-    /* Main Content */
-    .main-content {
-        margin-left: 60px;
-        transition: margin-left 0.3s ease-in-out;
-        flex: 1;
-        padding: 20px;
-    }
-
-    .sidebar:hover+.main-content {
-        margin-left: 250px;
-    }
-
-    /* Dashboard Grid */
-    .dashboard {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .card {
-        background: #2a2a40;
-        color: white;
-        padding: 30px;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .large {
-        grid-column: span 2;
-    }
-
-    .small {
-        width: 80%;
-        margin: auto;
-    }
-
-    /* Top Right Section */
-    .top-right {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .profession-btn,
-    .dark-toggle {
-        background: #444;
-        color: white;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .profile-pic {
-        width: 40px;
-        height: 40px;
-        background: gray;
-        border-radius: 50%;
-        display: flex;
-        align-items: left;
-        justify-content: center;
-        color: white;
-    }
-</style>
-
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <lord-icon src="https://cdn.lordicon.com/eouimtlu.json" trigger="hover" colors="primary:#ffffff"
-                style="width:60px;height:50px">
-            </lord-icon>
-            <nav>
-                <a href="#">
-                    <lord-icon class="icon" src="https://cdn.lordicon.com/cnpvyndp.json" trigger="hover"
-                        colors="primary:#ffffff" style="width:50px;height:50px">
-                    </lord-icon>
-                    <span>Home</span>
-                </a>
-                <a href="#">
-                    <lord-icon src="https://cdn.lordicon.com/xmaezqzk.json" trigger="hover" stroke="bold"
-                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
-                    </lord-icon>
-                    <span>Details</span>
-                </a>
-                <a href="#">
-                    <lord-icon src="https://cdn.lordicon.com/sbnjyzil.json" trigger="hover" stroke="bold"
-                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
-                    </lord-icon>
-                    <span>
-                        New Entry
-                    </span>
-                </a>
-                <a href="#">
-                    <lord-icon src="https://cdn.lordicon.com/gwvmctbb.json" trigger="hover" stroke="bold"
-                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
-                    </lord-icon>
-                    <span>Logout</span>
-                </a>
-            </nav>
-        </aside>
+    <!--=============== LOGIN IMAGE ===============-->
+    <svg class="login__blob" viewBox="0 0 566 840" xmlns="http://www.w3.org/2000/svg">
+        <mask id="mask0" mask-type="alpha">
+            <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
+            0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
+            591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
+            167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z" />
+        </mask>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="top-right">
-            </div>
-            <div class="dashboard">
-            </div>
-        </main>
+        <g mask="url(#mask0)">
+            <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
+            0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
+            591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
+            167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z" />
 
-        <div class="dashboard">
-            <header>
-                <button class="profession-btn">PROFESSION, NAME</button>
-                <div class="profile-pic">Profile Pic</div>
-                <button class="dark-toggle">DARK TOGGLE</button>
-            </header>
-            
-            <div class="grid-container">
-                <div class="card">
-                    <h2>TOTAL HOURS ATTENDED IN THE CURRENT MONTH AND TILL TODAY</h2>
-                    <canvas id="barChart"></canvas>
+            <!-- Insert your image (recommended size: 1000 x 1200) -->
+            <image class="login__img" href="bg-img.jpg" />
+        </g>
+    </svg>
+
+    <!--=============== LOGIN ===============-->
+    <div class="login container grid" id="loginAccessRegister">
+        <!--===== LOGIN ACCESS =====-->
+        <div class="login__access">
+            <h1 class="login__title">Log in to your account.</h1>
+
+            <div class="login__area">
+                <form action="" class="login__form">
+                    <div class="login__content grid">
+                        <div class="login__box">
+                            <input type="email" id="email" required placeholder=" " class="login__input">
+                            <label for="email" class="login__label">Email</label>
+
+                            <i class="ri-mail-fill login__icon"></i>
+                        </div>
+
+                        <div class="login__box">
+                            <input type="password" id="password" required placeholder=" " class="login__input">
+                            <label for="password" class="login__label">Password</label>
+
+                            <i class="ri-eye-off-fill login__icon login__password" id="loginPassword"></i>
+                        </div>
+                    </div>
+
+                    <a href="#" class="login__forgot">Forgot your password?</a>
+
+                    <button type="submit" class="login__button">Login</button>
+                </form>
+
+                <div class="login__social">
+                    <p class="login__social-title">Or login with</p>
+
+                    <div class="login__social-links">
+                        <a href="#" class="login__social-link">
+                            <img src="icon-google.svg" alt="image" class="login__social-img">
+                        </a>
+
+                        <a href="#" class="login__social-link">
+                            <img src="icon-facebook.svg" alt="image" class="login__social-img">
+                        </a>
+
+                        <a href="#" class="login__social-link">
+                            <img src="icon-apple.svg" alt="image" class="login__social-img">
+                        </a>
+                    </div>
                 </div>
-                
-                <div class="card">
-                    <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
-                    <p><span class="down">⬇</span> SPI: <strong>0.89</strong></p>
-                    <p><span class="up">⬆</span> CPI: <strong>0.87</strong></p>
-                    <p>Planned Value: <strong>$46,666.00</strong></p>
-                    <p>Earned Value: <strong>$41,579.40</strong></p>
-                </div>
-                
-                <div class="card">
-                    <h2>Alerts</h2>
-                    <p><strong>$93,332</strong> Total budget</p>
-                    <p><strong>$48,048</strong> Actual Cost</p>
-                    <canvas id="gaugeChart"></canvas>
-                </div>
-                
-                <div class="card">
-                    <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
-                    <canvas id="pieChart"></canvas>
-                </div>
+
+                <p class="login__switch">
+                    Don't have an account?
+                    <button id="loginButtonRegister">Create Account</button>
+                </p>
+            </div>
+        </div>
+
+        <!--===== LOGIN REGISTER =====-->
+        <div class="login__register">
+            <h1 class="login__title">Create new account.</h1>
+
+            <div class="login__area">
+                <form action="" class="login__form">
+                    <div class="login__content grid">
+                        <div class="login__group grid">
+                            <div class="login__box">
+                                <input type="text" id="names" required placeholder=" " class="login__input">
+                                <label for="names" class="login__label">Names</label>
+
+                                <i class="ri-id-card-fill login__icon"></i>
+                            </div>
+
+                            <div class="login__box">
+                                <input type="text" id="surnames" required placeholder=" " class="login__input">
+                                <label for="surnames" class="login__label">Surnames</label>
+
+                                <i class="ri-id-card-fill login__icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="login__box">
+                            <input type="email" id="emailCreate" required placeholder=" " class="login__input">
+                            <label for="emailCreate" class="login__label">Email</label>
+
+                            <i class="ri-mail-fill login__icon"></i>
+                        </div>
+
+                        <div class="login__box">
+                            <input type="password" id="passwordCreate" required placeholder=" " class="login__input">
+                            <label for="passwordCreate" class="login__label">Password</label>
+
+                            <i class="ri-eye-off-fill login__icon login__password" id="loginPasswordCreate"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login__button">Create account</button>
+                </form>
+
+                <p class="login__switch">
+                    Already have an account?
+                    <button id="loginButtonAccess">Log In</button>
+                </p>
             </div>
         </div>
     </div>
+
+    <!--=============== MAIN JS ===============-->
+    <script>
+        /*=============== SHOW HIDE PASSWORD LOGIN ===============*/
+        const passwordAccess = (loginPass, loginEye) => {
+            const input = document.getElementById(loginPass),
+                iconEye = document.getElementById(loginEye)
+
+            iconEye.addEventListener('click', () => {
+                // Change password to text
+                input.type === 'password' ? input.type = 'text'
+                    : input.type = 'password'
+
+                // Icon change
+                iconEye.classList.toggle('ri-eye-fill')
+                iconEye.classList.toggle('ri-eye-off-fill')
+            })
+        }
+        passwordAccess('password', 'loginPassword')
+
+        /*=============== SHOW HIDE PASSWORD CREATE ACCOUNT ===============*/
+        const passwordRegister = (loginPass, loginEye) => {
+            const input = document.getElementById(loginPass),
+                iconEye = document.getElementById(loginEye)
+
+            iconEye.addEventListener('click', () => {
+                // Change password to text
+                input.type === 'password' ? input.type = 'text'
+                    : input.type = 'password'
+
+                // Icon change
+                iconEye.classList.toggle('ri-eye-fill')
+                iconEye.classList.toggle('ri-eye-off-fill')
+            })
+        }
+        passwordRegister('passwordCreate', 'loginPasswordCreate')
+
+        /*=============== SHOW HIDE LOGIN & CREATE ACCOUNT ===============*/
+        const loginAcessRegister = document.getElementById('loginAccessRegister'),
+            buttonRegister = document.getElementById('loginButtonRegister'),
+            buttonAccess = document.getElementById('loginButtonAccess')
+
+        buttonRegister.addEventListener('click', () => {
+            loginAcessRegister.classList.add('active')
+        })
+
+        buttonAccess.addEventListener('click', () => {
+            loginAcessRegister.classList.remove('active')
+        })
+    </script>
 </body>
 
-<script src="https://cdn.lordicon.com/lordicon.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const ctx1 = document.getElementById("barChart").getContext("2d");
-        new Chart(ctx1, {
-            type: "bar",
-            data: {
-                labels: ["Closure Stage", "Execution Stage", "Monitor & Control", "Project Initiation", "Planning"],
-                datasets: [{
-                    label: "Hours",
-                    data: [56, 164, 36, 40, 144],
-                    backgroundColor: "#4A90E2"
-                }]
-            }
-        });
-
-        const ctx2 = document.getElementById("pieChart").getContext("2d");
-        new Chart(ctx2, {
-            type: "pie",
-            data: {
-                labels: ["Planning", "Initiation", "Execution", "Monitor & Control", "Closure"],
-                datasets: [{
-                    data: [60, 13.3, 100, 0, 0],
-                    backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
-                }]
-            }
-        });
-    });
-</script>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #13131f;
-    color: white;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-}
-
-.container {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    transition: margin-left 0.3s ease-in-out;
-}
-
-/* Sidebar */
-.sidebar {
-    width: 60px;
-    height: 100vh;
-    background: #2a2a40;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: width 0.3s ease-in-out;
-    overflow: hidden;
-    white-space: nowrap;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.sidebar:hover {
-    width: 250px;
-}
-
-.sidebar nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-}
-
-.sidebar nav a {
-    display: flex;
-    align-items: center;
-    color: white;
-    justify-content: center;
-    padding: 15px;
-    text-decoration: none;
-    width: 100%;
-}
-
-.sidebar nav a span {
-    display: none;
-    margin-left: 10px;
-}
-
-.sidebar:hover nav a span {
-    display: inline;
-}
-
-.main-content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 60px;
-    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-}
-
-.sidebar:hover + .main-content {
-    margin-left: 250px;
-}
-
-/* Adjust the card grid */
-.dashboard {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(calc(50% - 20px), 1fr)); /* Adjust dynamically */
-    gap: 20px;
-    padding: 20px;
-    transition: grid-template-columns 0.3s ease-in-out;
-}
-
-.sidebar:hover ~ .main-content .dashboard {
-    grid-template-columns: repeat(auto-fit, minmax(calc(45% - 20px), 1fr)); /* Reduce card width */
-}
-
-.card {
-    background: #2a2a40;
-    color: white;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    transition: width 0.3s ease-in-out;
-}
-
-.large {
-    grid-column: span 2;
-}
-
-.small {
-    width: 80%;
-    margin: auto;
-}
