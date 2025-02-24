@@ -133,7 +133,7 @@
     /* Top Right Section */
     .top-right {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         gap: 10px;
         margin-bottom: 20px;
     }
@@ -158,14 +158,16 @@
         justify-content: center;
         color: white;
     }
+
     header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #282841;
-            padding: 15px;
-            border-radius: 10px;
-        }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        justify-content: center;
+        background: #282841;
+        padding: 15px;
+        border-radius: 10px;
+    }
 </style>
 
 <body>
@@ -207,11 +209,14 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <div class="top-right">
-                <button class="profession-btn">PROFESSION, NAME</button>
-                <div class="profile-pic">Profile Pic</div>
-                <button class="dark-toggle">DARK TOGGLE</button>
-            </div>
+            <header>
+                <div class="top-right">
+                    <button class="profession-btn">PROFESSION, NAME</button>
+                    <div class="profile-pic">Profile Pic</div>
+                    <button class="dark-toggle">DARK TOGGLE</button>
+                </div>
+            </header>
+
             <div class="dashboard">
                 <div class="card">
                     <h2>TOTAL HOURS ATTENDED IN THE CURRENT MONTH AND TILL TODAY</h2>
