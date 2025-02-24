@@ -17,7 +17,7 @@
                 style="width:60px;height:50px">
             </lord-icon>
             <nav>
-                <a href="tchr_dashboard.html">
+                <a href="{%url 'edu:teacher_dashboard'%}">
                     <lord-icon class="icon" src="https://cdn.lordicon.com/cnpvyndp.json" trigger="hover"
                         colors="primary:#ffffff" style="width:50px;height:50px">
                     </lord-icon>
@@ -29,7 +29,7 @@
                     </lord-icon>
                     <span>Details</span>
                 </a>
-                <a href="{%static 'new_stu_details.html'%}">
+                <a href="{% url 'edu:stu_add' %}">
                     <lord-icon src="https://cdn.lordicon.com/sbnjyzil.json" trigger="hover" stroke="bold"
                         colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
                     </lord-icon>
