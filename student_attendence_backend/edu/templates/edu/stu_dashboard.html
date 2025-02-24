@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'edu/stu_style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <lord-icon src="https://cdn.lordicon.com/eouimtlu.json" trigger="hover" colors="primary:#ffffff"
+                style="width:60px;height:50px">
+            </lord-icon>
+            <nav>
+                <a href="stu_dashboard.html">
+                    <lord-icon class="icon" src="https://cdn.lordicon.com/cnpvyndp.json" trigger="hover"
+                        colors="primary:#ffffff" style="width:50px;height:50px">
+                    </lord-icon>
+                    <span>Home</span>
+                </a>
+                <!-- <a href="stu_details.html">
+                    <lord-icon src="https://cdn.lordicon.com/xmaezqzk.json" trigger="hover" stroke="bold"
+                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
+                    </lord-icon>
+                    <span>Details</span>
+                </a>
+                <a href="new_stu_details.html">
+                    <lord-icon src="https://cdn.lordicon.com/sbnjyzil.json" trigger="hover" stroke="bold"
+                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
+                    </lord-icon>
+                    <span>
+                        New Entry
+                    </span>
+                </a> -->
+                <a href="login.html">
+                    <lord-icon src="https://cdn.lordicon.com/gwvmctbb.json" trigger="hover" stroke="bold"
+                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
+                    </lord-icon>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <div class="top-right">
+                    <button class="profession-btn">PROFESSION, NAME</button>
+                    <div class="profile-pic"><img src="{% static 'edu/profile.jpg'%}"></img></div>
+                    <button class="dark-toggle">PROFESSION, NAME</button>
+                </div>
+            </header>
+
+            <div class="dashboard">
+                <div class="card">
+                    <h2>TOTAL HOURS ATTENDED IN THE CURRENT MONTH AND TILL TODAY</h2>
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="card">
+                    <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
+                    <p>Total Today: <strong id="totalHoursToday"></strong></p>
+                    <p>Total Till Now: <strong id="totalHoursTillNow"></strong></p>
+                    <p>Total This Month: <strong id="totalHoursThisMonth"></strong></p>
+                </div>
+                
+                <div class="card">
+                    <h2>Alerts</h2>
+                    <!-- <p><strong>$93,332</strong> Total budget</p>
+                    <p><strong>$48,048</strong> Actual Cost</p> -->
+                    <canvas id="gaugeChart"></canvas>
+                </div>
+                <div class="card">
+                    <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+
+<pre>{{ attendance_data|safe }}</pre>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const attendanceData = JSON.parse('{{ attendance_data|escapejs }}'); // Parse JSON safely
+        console.log("Attendance Data:", attendanceData); // Debugging
+
+        const labels = attendanceData.map(item => item.subject);
+        const hoursAttended = attendanceData.map(item => item.hours_attended);
+
+        // Bar Chart
+        const ctx1 = document.getElementById("barChart").getContext("2d");
+        new Chart(ctx1, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Hours Attended",
+                    data: hoursAttended,
+                    backgroundColor: "#4A90E2"
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Pie Chart
+        const ctx2 = document.getElementById("pieChart").getContext("2d");
+        new Chart(ctx2, {
+            type: "pie",
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: attendanceData.map(item => item.attendance_percentage),
+                    backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
+                }]
+            }
+        });
+
+        // Update Text Values
+        document.getElementById("totalHoursToday").innerText = "{{ total_hours_attended_today }}";
+        document.getElementById("totalHoursTillNow").innerText = "{{ total_hours_attended_till_now }}";
+        document.getElementById("totalHoursThisMonth").innerText = "{{ total_hours_attended_current_month }}";
+    });
+</script>
+
+</html>

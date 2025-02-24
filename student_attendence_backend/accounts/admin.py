@@ -11,10 +11,11 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
     fieldsets = (
-        (_("Personal Info"), {"fields": ("email", "full_name", "profession", "password")}),
-        (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
-        (_("Important Dates"), {"fields": ("last_login", "date_joined")}),
+    (_("Personal Info"), {"fields": ("email", "full_name", "profession", "password")}),
+    (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
+    (_("Important Dates"), {"fields": ("last_login",)}),  
     )
+
 
     add_fieldsets = (
         (_("Create User"), {

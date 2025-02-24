@@ -52,12 +52,12 @@ def signup_view(request):
             login(request, user)
             
             # Redirect user to next page or homepage
-            # next_page = request.session.get('next')
-            # if next_page:
-            #     del request.session['next']
-            #     return redirect(next_page)
-            # else:
-            #     return redirect('homepage:home')
+            next_page = request.session.get('next')
+            if next_page:
+                del request.session['next']
+                return redirect(next_page)
+            else:
+                return redirect('edu:student_dashboard')
 
     return render(request, 'accounts/register.html', {
         'password_did_not_match': password_did_not_match,
@@ -83,13 +83,13 @@ def login_view(request):
         if user is not None:
             # Login the user
             login(request, user)            
-            # next_page = request.session.get('next')
-            # if next_page:
-            #     # Delete the next page from the session
-            #     del request.session['next']
-            #     return redirect(next_page)
-            # else:
-            #     return redirect('homepage:home')
+            next_page = request.session.get('next')
+            if next_page:
+                # Delete the next page from the session
+                del request.session['next']
+                return redirect(next_page)
+            else:
+                return redirect('edu:student_dashboard')
         else:
             # Authentication failed
             error_message = "Invalid email or password. Please try again."
