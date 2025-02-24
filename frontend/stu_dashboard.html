@@ -9,167 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #13131f;
-        color: white;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        display: flex;
-        width: 90%;
-        height: 90vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-        width: 60px;
-        height: 100vh;
-        background: #2a2a40;
-        position: fixed;
-        left: 0;
-        top: 0;
-        transition: width 0.3s ease-in-out;
-        overflow: hidden;
-        white-space: nowrap;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .sidebar:hover {
-        width: 250px;
-    }
-
-    .sidebar nav {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        /* Center horizontally */
-        justify-content: center;
-        /* Center vertically */
-        height: 100%;
-        width: 100%;
-    }
-
-    .sidebar nav a {
-        display: flex;
-        align-items: center;
-        color: white;
-        justify-content: center;
-        padding: 15px;
-        text-decoration: none;
-        opacity: 1;
-        transition: opacity 0.3s ease-in-out;
-        width: 100%;
-    }
-
-    .sidebar:hover nav a {
-        opacity: 1;
-    }
-
-    .sidebar nav a span {
-        display: none;
-        margin-left: 10px;
-    }
-
-    .sidebar:hover nav a span {
-        display: inline;
-    }
-
-    .sidebar nav a .icon {
-        width: 50px;
-        height: 50px;
-    }
-
-    /* Main Content */
-    .main-content {
-        margin-left: 60px;
-        transition: margin-left 0.3s ease-in-out;
-        flex: 1;
-        padding: 20px;
-    }
-
-    .sidebar:hover+.main-content {
-        margin-left: 250px;
-    }
-
-    /* Dashboard Grid */
-    .dashboard {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(calc(50% - 20px), 1fr));
-        gap: 20px;
-        padding: 20px;
-        transition: grid-template-columns 0.3s ease-in-out;
-    }
-
-    .sidebar:hover~.main-content .dashboard {
-        grid-template-columns: repeat(auto-fit, minmax(calc(45% - 20px), 1fr));
-        /* Reduce card width */
-    }
-
-    .card {
-        background: #2a2a40;
-        color: white;
-        padding: 30px;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .large {
-        grid-column: span 2;
-    }
-
-    .small {
-        width: 80%;
-        margin: auto;
-    }
-
-    /* Top Right Section */
-    .top-right {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .profession-btn,
-    .dark-toggle {
-        background: #444;
-        color: white;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .profile-pic {
-        width: 40px;
-        height: 40px;
-        background: gray;
-        border-radius: 50%;
-        display: flex;
-        align-items: left;
-        justify-content: center;
-        color: white;
-    }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        justify-content: center;
-        background: #282841;
-        padding: 15px;
-        border-radius: 10px;
-    }
-</style>
-
 <body>
     <div class="container">
         <!-- Sidebar -->
@@ -178,27 +17,27 @@
                 style="width:60px;height:50px">
             </lord-icon>
             <nav>
-                <a href="#">
+                <a href="stu_dashboard.html">
                     <lord-icon class="icon" src="https://cdn.lordicon.com/cnpvyndp.json" trigger="hover"
                         colors="primary:#ffffff" style="width:50px;height:50px">
                     </lord-icon>
                     <span>Home</span>
                 </a>
-                <a href="#">
+                <!-- <a href="stu_details.html">
                     <lord-icon src="https://cdn.lordicon.com/xmaezqzk.json" trigger="hover" stroke="bold"
                         colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
                     </lord-icon>
                     <span>Details</span>
                 </a>
-                <a href="#">
+                <a href="new_stu_details.html">
                     <lord-icon src="https://cdn.lordicon.com/sbnjyzil.json" trigger="hover" stroke="bold"
                         colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
                     </lord-icon>
                     <span>
                         New Entry
                     </span>
-                </a>
-                <a href="#">
+                </a> -->
+                <a href="login.html">
                     <lord-icon src="https://cdn.lordicon.com/gwvmctbb.json" trigger="hover" stroke="bold"
                         colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
                     </lord-icon>
@@ -212,8 +51,8 @@
             <header>
                 <div class="top-right">
                     <button class="profession-btn">PROFESSION, NAME</button>
-                    <div class="profile-pic">Profile Pic</div>
-                    <button class="dark-toggle">DARK TOGGLE</button>
+                    <div class="profile-pic"><img src="images/profile.jpg"></img></div>
+                    <button class="dark-toggle">PROFESSION, NAME</button>
                 </div>
             </header>
 
@@ -231,8 +70,8 @@
                 </div>
                 <div class="card">
                     <h2>Alerts</h2>
-                    <p><strong>$93,332</strong> Total budget</p>
-                    <p><strong>$48,048</strong> Actual Cost</p>
+                    <!-- <p><strong>$93,332</strong> Total budget</p>
+                    <p><strong>$48,048</strong> Actual Cost</p> -->
                     <canvas id="gaugeChart"></canvas>
                 </div>
                 <div class="card">
@@ -251,10 +90,10 @@
         new Chart(ctx1, {
             type: "bar",
             data: {
-                labels: ["Closure Stage", "Execution Stage", "Monitor & Control", "Project Initiation", "Planning"],
+                labels: ["Maths", "Chemistry", "Physics", "English", "Hindi"],
                 datasets: [{
                     label: "Hours",
-                    data: [56, 164, 36, 40, 144],
+                    data: [60, 13.3, 100, 50, 80],
                     backgroundColor: "#4A90E2"
                 }]
             }
