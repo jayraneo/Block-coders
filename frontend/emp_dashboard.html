@@ -61,22 +61,23 @@
                     <canvas id="barChart"></canvas>
                 </div>
                 <div class="card">
-                    <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
-                    <p><span class="down">⬇</span> SPI: <strong>0.89</strong></p>
-                    <p><span class="up">⬆</span> CPI: <strong>0.87</strong></p>
-                    <p>Planned Value: <strong>$46,666.00</strong></p>
-                    <p>Earned Value: <strong>$41,579.40</strong></p>
+                    <h2>Attendence for Today</h2>
+                    <canvas id="pieChart"></canvas>
                 </div>
                 <div class="card">
                     <h2>Alerts</h2>
                     <!-- <p><strong>$93,332</strong> Total budget</p>
                     <p><strong>$48,048</strong> Actual Cost</p> -->
-                    <canvas id="gaugeChart"></canvas>
                 </div>
                 <div class="card">
-                    <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
-                    <canvas id="pieChart"></canvas>
+                    <h2>Attendence Till Today</h2>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <span id="progress-fill" style="width: 70%;">70%</span>
+                        </div>
+                    </div>
                 </div>
+                
             </div>
         </main>
     </div>
@@ -109,6 +110,14 @@
                     backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
                 }]
             }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let progressValue = 70; // Change this value to adjust the progress
+            const progressFill = document.getElementById("progress-fill");
+
+            progressFill.style.width = progressValue + "%";
+            progressFill.innerText = progressValue + "%";
         });
     });
 </script>
