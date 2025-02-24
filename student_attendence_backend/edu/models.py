@@ -1,15 +1,17 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
+from django.utils.timezone import now
 
 User = get_user_model()
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     roll_no = models.CharField(max_length=20, unique=True)
-    department = models.CharField(max_length=100)
+    # department = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.user.full_name} ({self.roll_no})"  # ✅ Use full_name instead
+        return f"{self.user.full_name} ({self.roll_no})"  
 
 
 class Subject(models.Model):
@@ -43,3 +45,17 @@ class Attendance(models.Model):
     def __str__(self):
         return f"{self.student.user.full_name} - {self.subject.name} - {self.date}"
 
+
+class AttendanceSummaryManager(models.Manager):
+    def get_monthly_attendance(self, student, month=None, year=None):
+        if month is None or year is None:
+            today = now().date()
+            month, year = today.month, today.year
+        
+        attendance_data = Attendance.objects.filter(
+            student=student,
+            date__year=year,
+            date__month=month
+        ).values('subject__name').annotate(total_hours=Sum('hours_attended'))
+        
+        return {entry['subject__name']: entry['total_hours'] for entry in attendance_data}

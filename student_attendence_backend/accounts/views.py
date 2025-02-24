@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
-from django.conf import settings
-from django.core.mail import send_mail
 
 def signup_view(request):
     password_did_not_match = None
@@ -51,13 +49,10 @@ def signup_view(request):
             # Log the user in
             login(request, user)
             
-            # Redirect user to next page or homepage
-            next_page = request.session.get('next')
-            if next_page:
-                del request.session['next']
-                return redirect(next_page)
-            else:
+            if user.profession == 'student':
                 return redirect('edu:student_dashboard')
+            elif user.profession == 'teacher':
+                return redirect('edu:teacher_dashboard')
 
     return render(request, 'accounts/register.html', {
         'password_did_not_match': password_did_not_match,
@@ -83,13 +78,10 @@ def login_view(request):
         if user is not None:
             # Login the user
             login(request, user)            
-            next_page = request.session.get('next')
-            if next_page:
-                # Delete the next page from the session
-                del request.session['next']
-                return redirect(next_page)
-            else:
+            if user.profession == 'student':
                 return redirect('edu:student_dashboard')
+            elif user.profession == 'teacher':
+                return redirect('edu:teacher_dashboard')
         else:
             # Authentication failed
             error_message = "Invalid email or password. Please try again."

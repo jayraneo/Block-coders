@@ -1,15 +1,14 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{%static 'edu/stu_style.css'%}">
+    <link rel="stylesheet" href="{%static 'edu/tchr_style.css'%}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
+</head>
 <body>
     <div class="container">
         <!-- Sidebar -->
@@ -18,11 +17,25 @@
                 style="width:60px;height:50px">
             </lord-icon>
             <nav>
-                <a href="stu_dashboard.html">
+                <a href="tchr_dashboard.html">
                     <lord-icon class="icon" src="https://cdn.lordicon.com/cnpvyndp.json" trigger="hover"
                         colors="primary:#ffffff" style="width:50px;height:50px">
                     </lord-icon>
                     <span>Home</span>
+                </a>
+                <a href="stu_details.html">
+                    <lord-icon src="https://cdn.lordicon.com/xmaezqzk.json" trigger="hover" stroke="bold"
+                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
+                    </lord-icon>
+                    <span>Details</span>
+                </a>
+                <a href="new_stu_details.html">
+                    <lord-icon src="https://cdn.lordicon.com/sbnjyzil.json" trigger="hover" stroke="bold"
+                        colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
+                    </lord-icon>
+                    <span>
+                        New Entry
+                    </span>
                 </a>
                 <a href="login.html">
                     <lord-icon src="https://cdn.lordicon.com/gwvmctbb.json" trigger="hover" stroke="bold"
@@ -33,12 +46,13 @@
             </nav>
         </aside>
 
+
         <!-- Main Content -->
         <main class="main-content">
             <header>
                 <div class="top-right">
                     <button class="profession-btn">PROFESSION, NAME</button>
-                    <div class="profile-pic"><img src="{%static 'edu/profile.jpg' %}"></img></div>
+                    <div class="profile-pic"><img src="images/profile.jpg"></img></div>
                     <button class="dark-toggle">PROFESSION, NAME</button>
                 </div>
             </header>
@@ -69,44 +83,33 @@
         </main>
     </div>
 </body>
-
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const ctx1 = document.getElementById("barChart").getContext("2d");
-        const ctx2 = document.getElementById("pieChart").getContext("2d");
-
-        // Get data from Django template
-        const labels = {{ labels|safe }};
-        const data = {{ data|safe }};
-        const percentages = {{ percentages|safe }};
-
-        // Bar Chart - Hours Attended
         new Chart(ctx1, {
             type: "bar",
             data: {
-                labels: labels,
+                labels: ["Maths", "Chemistry", "Physics", "English", "Hindi"],
                 datasets: [{
-                    label: "Hours Attended (This Month)",
-                    data: data,
+                    label: "Hours",
+                    data: [60, 13.3, 100, 50, 80],
                     backgroundColor: "#4A90E2"
                 }]
             }
         });
 
-        // Pie Chart - Attendance Percentage
+        const ctx2 = document.getElementById("pieChart").getContext("2d");
         new Chart(ctx2, {
             type: "pie",
             data: {
-                labels: labels,
+                labels: ["Maths", "Chemistry", "Physics", "English", "Hindi"],
                 datasets: [{
-                    data: percentages,
+                    data: [60, 13.3, 100, 50, 80],
                     backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
                 }]
             }
         });
     });
 </script>
-
 </html>
