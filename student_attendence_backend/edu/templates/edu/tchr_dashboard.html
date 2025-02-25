@@ -63,11 +63,9 @@
                     <canvas id="barChart"></canvas>
                 </div>
                 <div class="card">
-                    <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
-                    <p><span class="down">⬇</span> SPI: <strong>0.89</strong></p>
-                    <p><span class="up">⬆</span> CPI: <strong>0.87</strong></p>
-                    <p>Planned Value: <strong>$46,666.00</strong></p>
-                    <p>Earned Value: <strong>$41,579.40</strong></p>
+                    <h2>Attendance Statistics</h2>
+                    <p>Average Attendance: <strong>{{ avg_attendance_percentage }}%</strong></p>
+                    <p>Total Subjects: <strong>{{ labels|length }}</strong></p>
                 </div>
                 <div class="card">
                     <h2>Alerts</h2>
@@ -82,15 +80,15 @@
 </body>
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
 <script>
-     document.addEventListener("DOMContentLoaded", function () {
-        const ctx1 = document.getElementById("barChart").getContext("2d");
-        const ctx2 = document.getElementById("pieChart").getContext("2d");
+document.addEventListener("DOMContentLoaded", function () {
+    const ctx1 = document.getElementById("barChart").getContext("2d");
+    const ctx2 = document.getElementById("pieChart").getContext("2d");
 
-        // Get data from Django template
-        const labels = {{ labels| safe
-    }};
-    const data = {{ data| safe }};
-    const percentages = {{ percentages| safe }};
+    // Get data from Django template
+    const labels = {{ labels|safe }};
+    const data = {{ data|safe }};
+    const percentages = {{ percentages|safe }};
+    const avgAttendancePercentage = {{ avg_attendance_percentage|safe }};
 
     // Bar Chart - Hours Attended
     new Chart(ctx1, {
@@ -98,10 +96,18 @@
         data: {
             labels: labels,
             datasets: [{
-                label: "Hours Attended (This Month)",
+                label: "Hours Attended",
                 data: data,
                 backgroundColor: "#4A90E2"
             }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
     });
 
@@ -112,38 +118,31 @@
             labels: labels,
             datasets: [{
                 data: percentages,
-                backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
+                backgroundColor: [
+                    "#4A90E2",
+                    "#50E3C2",
+                    "#F5A623",
+                    "#D0021B",
+                    "#9013FE"
+                ]
             }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
         }
     });
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const avgAttendancePercentage = {{ avg_attendance_percentage|safe }}; // Get from Django
-    
-            function updateSpeedometer(percentage) {
-                if (percentage < 0) percentage = 0;
-                if (percentage > 100) percentage = 100;
-    
-                const progressArc = document.getElementById("progressArc");
-                const needle = document.getElementById("needle");
-                const progressText = document.getElementById("progressText");
-    
-                // Adjust stroke offset (125 is full, 0 is empty)
-                let offset = 125 - (percentage / 100) * 125;
-                progressArc.style.strokeDashoffset = offset;
-    
-                // Rotate needle (0% at left, 100% at right)
-                let angle = -90 + (percentage / 100) * 180;
-                needle.style.transform = `rotate(${angle}deg)`;
-    
-                // Update text
-                progressText.innerText = `${percentage}%`;
-            }
-    
-            // Initialize the speedometer with the total attendance percentage
-            updateSpeedometer(avgAttendancePercentage);
-        });
-    });
-
+    // Update statistics in the second card
+    document.querySelector('.card:nth-child(2)').innerHTML = `
+        <h2>Attendance Statistics</h2>
+        <p>Average Attendance: <strong>${avgAttendancePercentage}%</strong></p>
+        <p>Total Subjects: <strong>${labels.length}</strong></p>
+    `;
+});
 </script>
 </html>
