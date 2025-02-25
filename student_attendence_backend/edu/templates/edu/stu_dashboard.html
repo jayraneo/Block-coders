@@ -49,22 +49,6 @@
                     <canvas id="barChart"></canvas>
                 </div>
                 <div class="card">
-<<<<<<< HEAD
-                    <h2>Attendence Till Today</h2>
-                    <div class="speedometer-container">
-                        <svg class="speedometer" viewBox="0 0 100 50" width="300" height="300">
-                            <!-- Background Arc -->
-                            <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="#555" stroke-width="8" />
-                            <!-- Progress Arc -->
-                            <path id="progressArc" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="lime"
-                                stroke-width="8" stroke-dasharray="125" stroke-dashoffset="125" />
-                            <!-- Needle -->
-                            <line id="needle" x1="50" y1="50" x2="50" y2="10" stroke="red" stroke-width="3"
-                                class="needle" />
-                        </svg>
-                        <div class="progress-text" id="progressText">0%</div>
-                    </div>
-=======
                     <h2>ATTENDANCE TILL TODAY(%)</h2>
                     <div class="speedometer-container">
                         <svg class="speedometer" viewBox="0 0 100 50" width="300" height="300">
@@ -78,7 +62,6 @@
                         <div class="progress-text" id="progressText">0%</div>
                     </div>
                 
->>>>>>> 20bde70d6c8cb1754b15625184776d2765f5525e
                     <button class="progress" onclick="fetchProgress()">Check Attendence</button>
                 </div>
                 <div class="card">
@@ -132,16 +115,6 @@
         }
     });
 
-<<<<<<< HEAD
-    //progress bar
-    document.addEventListener("DOMContentLoaded", function () {
-        let progressValue = 70; // Change this value to adjust the progress
-        const progressFill = document.getElementById("progress-fill");
-
-        progressFill.style.width = progressValue + "%";
-        progressFill.innerText = progressValue + "%";
-    });
-=======
         document.addEventListener("DOMContentLoaded", function () {
             const avgAttendancePercentage = {{ avg_attendance_percentage|safe }}; // Get from Django
     
@@ -168,7 +141,6 @@
             // Initialize the speedometer with the total attendance percentage
             updateSpeedometer(avgAttendancePercentage);
         });
->>>>>>> 20bde70d6c8cb1754b15625184776d2765f5525e
     });
 
 </script>
