@@ -1,35 +1,36 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="{%static 'edu/tchr_style.css'%}">
+    <title>Employee Form</title>
+    <link rel="stylesheet" href="{%static 'edu/new_emp_style.css'%}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
 </head>
 <body>
+
     <div class="container">
+        
         <!-- Sidebar -->
         <aside class="sidebar">
             <lord-icon src="https://cdn.lordicon.com/eouimtlu.json" trigger="hover" colors="primary:#ffffff"
                 style="width:60px;height:50px">
             </lord-icon>
             <nav>
-                <a href="{%url 'edu:tchr_dashboard'%}">
+                <a href="{%url 'edu:mngr_dashboard'%}">
                     <lord-icon class="icon" src="https://cdn.lordicon.com/cnpvyndp.json" trigger="hover"
                         colors="primary:#ffffff" style="width:50px;height:50px">
                     </lord-icon>
                     <span>Home</span>
                 </a>
-                <a href="stu_details.html">
+                <a href="{%url 'edu:emp_details'%}">
                     <lord-icon src="https://cdn.lordicon.com/xmaezqzk.json" trigger="hover" stroke="bold"
                         colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
                     </lord-icon>
                     <span>Details</span>
                 </a>
-                <a href="{% url 'edu:new_stu_detail' %}">
+                <a href="{%url 'edu:new_emp_details'%}">
                     <lord-icon src="https://cdn.lordicon.com/sbnjyzil.json" trigger="hover" stroke="bold"
                         colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
                     </lord-icon>
@@ -44,8 +45,7 @@
                     <span>Logout</span>
                 </a>
             </nav>
-        </aside>
-
+        </aside>  
 
         <!-- Main Content -->
         <main class="main-content">
@@ -57,56 +57,24 @@
                 </div>
             </header>
 
-            <div class="dashboard">
-                <div class="card">
-                    <h2>TOTAL HOURS ATTENDED IN THE CURRENT MONTH AND TILL TODAY</h2>
-                    <canvas id="barChart"></canvas>
-                </div>
-                <div class="card">
-                    <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
-                    <p><span class="down">⬇</span> SPI: <strong>0.89</strong></p>
-                    <p><span class="up">⬆</span> CPI: <strong>0.87</strong></p>
-                    <p>Planned Value: <strong>$46,666.00</strong></p>
-                    <p>Earned Value: <strong>$41,579.40</strong></p>
-                </div>
-                <div class="card">
-                    <h2>Alerts</h2>
-                </div>
-                <div class="card">
-                    <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
-                    <canvas id="pieChart"></canvas>
+            <!-- Form Card -->
+            <div class="form-card">
+                <input type="text" placeholder="Enter Full Name">
+                <input type="text" placeholder="Employee ID">
+                <input type="date" placeholder="Date of Birth">
+                <input type="email" placeholder="Email">
+                <input type="text" placeholder="Contact Details">
+                <input type="text" placeholder="Address">
+
+                <!-- Save Button -->
+                <div class="save">
+                    <button class="save-button">Save</button>
+                    <button class="phtoto">Click Photo</button>
                 </div>
             </div>
+
         </main>
     </div>
-</body>
-<script src="https://cdn.lordicon.com/lordicon.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const ctx1 = document.getElementById("barChart").getContext("2d");
-        new Chart(ctx1, {
-            type: "bar",
-            data: {
-                labels: ["Maths", "Chemistry", "Physics", "English", "Hindi"],
-                datasets: [{
-                    label: "Hours",
-                    data: [60, 13.3, 100, 50, 80],
-                    backgroundColor: "#4A90E2"
-                }]
-            }
-        });
 
-        const ctx2 = document.getElementById("pieChart").getContext("2d");
-        new Chart(ctx2, {
-            type: "pie",
-            data: {
-                labels: ["Maths", "Chemistry", "Physics", "English", "Hindi"],
-                datasets: [{
-                    data: [60, 13.3, 100, 50, 80],
-                    backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
-                }]
-            }
-        });
-    });
-</script>
+</body>
 </html>
