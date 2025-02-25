@@ -38,9 +38,9 @@
         <main class="main-content">
             <header>
                 <div class="top-right">
-                    <button class="profession-btn">PROFESSION, NAME</button>
-                    <div class="profile-pic"><img src="{%static 'edu/profile.jpg' %}"></img></div>
-                    <button class="dark-toggle">PROFESSION, NAME</button>
+                    <button class="profession-btn">{{ user_profession }}, {{ user_name }}</button>
+                    <div class="profile-pic"><img src="{% static 'edu/profile.jpg' %}" alt="Profile"></div>
+                    <button class="dark-toggle">Theme</button>
                 </div>
             </header>
 

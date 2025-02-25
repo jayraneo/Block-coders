@@ -57,7 +57,9 @@ def student_dashboard(request):
         'labels': json.dumps(labels),
         'data': json.dumps(data),
         'percentages': json.dumps(percentages),
-        'avg_attendance_percentage': float(avg_attendance_percentage)
+        'avg_attendance_percentage': float(avg_attendance_percentage),
+        'user_profession': request.user.profession.title(),  # Add this
+        'user_name': request.user.full_name  # Add this
     }
     return render(request, 'edu/stu_dashboard.html', context)
 
@@ -101,7 +103,9 @@ def teacher_dashboard(request):
         'labels': json.dumps(labels),
         'data': json.dumps(data),
         'percentages': json.dumps(percentages),
-        'avg_attendance_percentage': avg_attendance_percentage
+        'avg_attendance_percentage': avg_attendance_percentage,
+        'user_profession': request.user.profession.title(),  # Add this
+        'user_name': request.user.full_name  # Add this
     }
     
     return render(request, "edu/tchr_dashboard.html", context)
@@ -147,3 +151,7 @@ def stu_add(request):
         return redirect("edu:teacher_dashboard")  # Redirect to the form page after submission
 
     return render(request, "edu/new_stu_details.html")
+
+@login_required
+def stu_details(request):
+    return render(request, "edu/stu_details.html")
