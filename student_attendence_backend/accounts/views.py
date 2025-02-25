@@ -92,4 +92,4 @@ def login_view(request):
 def logout_view(request):
     # Logout the user
     logout(request)
-    return redirect('homepage:home')
+    return redirect('accounts:login')
