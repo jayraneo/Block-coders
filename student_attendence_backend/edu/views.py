@@ -1,10 +1,16 @@
-
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.utils.timezone import now
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Attendance, Subject, StudentProfile, User
+from django.shortcuts import render
+from django.db.models import Sum
+from .models import TeacherProfile, Attendance, Subject
+from django.core import serializers
+import json
+
+
 
 @login_required
 def student_dashboard(request):
@@ -47,25 +53,22 @@ def student_dashboard(request):
     # Calculate the overall average attendance percentage
     avg_attendance_percentage = round(total_percentage / subject_count, 2) if subject_count > 0 else 0
 
-    return render(request, "edu/stu_dashboard.html", {
-        "labels": labels,
-        "data": data,  # For bar chart
-        "percentages": percentages,  # For pie chart
-        "avg_attendance_percentage": avg_attendance_percentage  # Send this to frontend
-    })
+    context = {
+        'labels': json.dumps(labels),
+        'data': json.dumps(data),
+        'percentages': json.dumps(percentages),
+        'avg_attendance_percentage': float(avg_attendance_percentage)
+    }
+    return render(request, 'edu/stu_dashboard.html', context)
 
 
 @login_required
-from django.shortcuts import render
-from django.db.models import Sum
-from .models import TeacherProfile, Attendance, Subject
-
 def teacher_dashboard(request):
     # Get the logged-in teacher's profile
     teacher = TeacherProfile.objects.get(user=request.user)
     
-    # Get all subjects taught by the teacher
-    subjects = Subject.objects.filter(teacher=teacher)
+    # Fix: Use the correct relationship name 'teachers'
+    subjects = Subject.objects.filter(teachers=teacher)
     
     labels = []
     data = []  # Total hours attended per subject

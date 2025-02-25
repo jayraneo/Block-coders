@@ -8,6 +8,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="{%static 'edu/stu_style.css'%}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
 </head>
 
 <body>
@@ -77,72 +78,83 @@
     </div>
 </body>
 
-<script src="https://cdn.lordicon.com/lordicon.js"></script>
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const ctx1 = document.getElementById("barChart").getContext("2d");
         const ctx2 = document.getElementById("pieChart").getContext("2d");
 
-        // Get data from Django template
-        const labels = {{ labels| safe
-    }};
-    const data = {{ data| safe }};
-    const percentages = {{ percentages| safe }};
+        try {
+            // Parse the Django template variables safely
+            const labels = JSON.parse('{{ labels|safe|escapejs }}' || '[]');
+            const data = JSON.parse('{{ data|safe|escapejs }}' || '[]');
+            const percentages = JSON.parse('{{ percentages|safe|escapejs }}' || '[]');
+            const avgAttendancePercentage = parseFloat('{{ avg_attendance_percentage|default:0 }}');
 
-    // Bar Chart - Hours Attended
-    new Chart(ctx1, {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "Hours Attended (This Month)",
-                data: data,
-                backgroundColor: "#4A90E2"
-            }]
-        }
-    });
+            // Bar Chart - Hours Attended
+            new Chart(ctx1, {
+                type: "bar",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: "Hours Attended (This Month)",
+                        data: data,
+                        backgroundColor: "#4A90E2"
+                    }]
+                }
+            });
 
-    // Pie Chart - Attendance Percentage
-    new Chart(ctx2, {
-        type: "pie",
-        data: {
-            labels: labels,
-            datasets: [{
-                data: percentages,
-                backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
-            }]
-        }
-    });
+            // Pie Chart - Attendance Percentage
+            new Chart(ctx2, {
+                type: "pie",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: percentages,
+                        backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
+                    }]
+                }
+            });
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const avgAttendancePercentage = {{ avg_attendance_percentage|safe }}; // Get from Django
-    
+            // Speedometer Update Function
             function updateSpeedometer(percentage) {
                 if (percentage < 0) percentage = 0;
                 if (percentage > 100) percentage = 100;
-    
+
                 const progressArc = document.getElementById("progressArc");
                 const needle = document.getElementById("needle");
                 const progressText = document.getElementById("progressText");
-    
-                // Adjust stroke offset (125 is full, 0 is empty)
-                let offset = 125 - (percentage / 100) * 125;
-                progressArc.style.strokeDashoffset = offset;
-    
-                // Rotate needle (0% at left, 100% at right)
-                let angle = -90 + (percentage / 100) * 180;
-                needle.style.transform = `rotate(${angle}deg)`;
-    
-                // Update text
-                progressText.innerText = `${percentage}%`;
+
+                if (progressArc && needle && progressText) {
+                    // Adjust stroke offset (125 is full, 0 is empty)
+                    let offset = 125 - (percentage / 100) * 125;
+                    progressArc.style.strokeDashoffset = offset;
+
+                    // Rotate needle (0% at left, 100% at right)
+                    let angle = -90 + (percentage / 100) * 180;
+                    needle.style.transform = `rotate(${angle}deg)`;
+
+                    // Update text
+                    progressText.innerText = `${percentage}%`;
+                }
             }
-    
-            // Initialize the speedometer with the total attendance percentage
+
+            // Initialize the speedometer
             updateSpeedometer(avgAttendancePercentage);
-        });
+        } catch (error) {
+            console.error("Error initializing dashboard:", error);
+        }
     });
 
+    function fetchProgress() {
+        // Add this function since it's referenced in your button onclick
+        fetch('/api/attendance-progress/') // Update this URL to match your Django URL configuration
+            .then(response => response.json())
+            .then(data => {
+                updateSpeedometer(data.percentage);
+            })
+            .catch(error => console.error('Error fetching progress:', error));
+    }
 </script>
+
 
 </html>
