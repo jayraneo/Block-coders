@@ -45,7 +45,7 @@
 
             <div class="dashboard">
                 <div class="card">
-                    <h2>TOTAL HOURS ATTENDED IN THE CURRENT MONTH AND TILL TODAY</h2>
+                    <h2>TOTAL HOURS ATTENDED IN THE CURRENT MONTH</h2>
                     <canvas id="barChart"></canvas>
                 </div>
                 <div class="card">
@@ -59,7 +59,6 @@
                     <h2>Alerts</h2>
                     <!-- <p><strong>$93,332</strong> Total budget</p>
                     <p><strong>$48,048</strong> Actual Cost</p> -->
-                    <canvas id="gaugeChart"></canvas>
                 </div>
                 <div class="card">
                     <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
@@ -105,6 +104,15 @@
                     backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
                 }]
             }
+        });
+
+        //progress bar
+        document.addEventListener("DOMContentLoaded", function () {
+            let progressValue = 70; // Change this value to adjust the progress
+            const progressFill = document.getElementById("progress-fill");
+
+            progressFill.style.width = progressValue + "%";
+            progressFill.innerText = progressValue + "%";
         });
     });
 </script>
