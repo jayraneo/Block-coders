@@ -18,13 +18,13 @@
                 style="width:60px;height:50px">
             </lord-icon>
             <nav>
-                <a href="stu_dashboard.html">
+                <a href="{%url 'edu:student_dashboard'%}">
                     <lord-icon class="icon" src="https://cdn.lordicon.com/cnpvyndp.json" trigger="hover"
                         colors="primary:#ffffff" style="width:50px;height:50px">
                     </lord-icon>
                     <span>Home</span>
                 </a>
-                <a href="login.html">
+                <a href="{%url 'accounts:logout'%}">
                     <lord-icon src="https://cdn.lordicon.com/gwvmctbb.json" trigger="hover" stroke="bold"
                         colors="primary:#ffffff,secondary:#e4e4e4" style="width:50px;height:50px">
                     </lord-icon>
@@ -49,21 +49,29 @@
                     <canvas id="barChart"></canvas>
                 </div>
                 <div class="card">
-                    <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
-                    <p><span class="down">⬇</span> SPI: <strong>0.89</strong></p>
-                    <p><span class="up">⬆</span> CPI: <strong>0.87</strong></p>
-                    <p>Planned Value: <strong>$46,666.00</strong></p>
-                    <p>Earned Value: <strong>$41,579.40</strong></p>
+                    <h2>ATTENDANCE TILL TODAY(%)</h2>
+                    <div class="speedometer-container">
+                        <svg class="speedometer" viewBox="0 0 100 50" width="300" height="300">
+                            <!-- Background Arc -->
+                            <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="#555" stroke-width="8"/>
+                            <!-- Progress Arc -->
+                            <path id="progressArc" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="lime" stroke-width="8" stroke-dasharray="125" stroke-dashoffset="125"/>
+                            <!-- Needle -->
+                            <line id="needle" x1="50" y1="50" x2="50" y2="10" stroke="red" stroke-width="3" class="needle"/>
+                        </svg>
+                        <div class="progress-text" id="progressText">0%</div>
+                    </div>
+                
+                    <button class="progress" onclick="fetchProgress()">Check Attendence</button>
                 </div>
                 <div class="card">
                     <h2>Alerts</h2>
-                    <!-- <p><strong>$93,332</strong> Total budget</p>
-                    <p><strong>$48,048</strong> Actual Cost</p> -->
                 </div>
                 <div class="card">
-                    <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
+                    <h2>SUBJECTWISE ATTENDANCE PERCENTAGE</h2>
                     <canvas id="pieChart"></canvas>
                 </div>
+
             </div>
         </main>
     </div>
@@ -114,7 +122,48 @@
             progressFill.style.width = progressValue + "%";
             progressFill.innerText = progressValue + "%";
         });
+
+        const SERVER_URL = "http://192.168.150.98:8000/progress"; // API to fetch progress data
+
+        async function fetchProgress() {
+            try {
+                const response = await fetch(SERVER_URL);
+                const data = await response.json();
+
+                if (data && typeof data.percentage === "number") {
+                    updateSpeedometer(data.percentage);
+                } else {
+                    console.error("Invalid response data:", data);
+                }
+            } catch (error) {
+                console.error("Error fetching progress:", error);
+            }
+        }
+
+        function updateSpeedometer(percentage) {
+            if (percentage < 0) percentage = 0;
+            if (percentage > 100) percentage = 100;
+
+            const progressArc = document.getElementById("progressArc");
+            const needle = document.getElementById("needle");
+            const progressText = document.getElementById("progressText");
+
+            // Invert arc offset (0% is full, 100% is empty)
+            let offset = 125 - (percentage / 100) * 125;
+            progressArc.style.strokeDashoffset = offset;
+
+            // Rotate needle (0% starts at right, 100% at left)
+            let angle = -90 + (percentage / 100) * 180;
+            needle.style.transform = `rotate(${angle}deg)`;
+
+            // Update text
+            progressText.innerText = `${percentage}%`;
+        }
+
+        // Auto-fetch progress every 2 seconds
+        setInterval(fetchProgress, 2000);
     });
+
 </script>
 
 </html>
