@@ -56,8 +56,51 @@ def student_dashboard(request):
 
 
 @login_required
+from django.shortcuts import render
+from django.db.models import Sum
+from .models import TeacherProfile, Attendance, Subject
+
 def teacher_dashboard(request):
-    return render(request, 'edu/tchr_dashboard.html')
+    # Get the logged-in teacher's profile
+    teacher = TeacherProfile.objects.get(user=request.user)
+    
+    # Get all subjects taught by the teacher
+    subjects = Subject.objects.filter(teacher=teacher)
+    
+    labels = []
+    data = []  # Total hours attended per subject
+    percentages = []  # Attendance percentage per subject
+    total_percentage = 0  # For cumulative attendance
+    subject_count = 0  # To calculate average
+
+    for subject in subjects:
+        # Get total hours attended by students in this subject
+        total_hours_attended = Attendance.objects.filter(subject=subject).aggregate(Sum('hours_attended'))['hours_attended__sum'] or 0
+        total_subject_hours = subject.total_hours  # Fixed total hours
+
+        # Calculate attendance percentage per subject
+        if total_subject_hours > 0:
+            attendance_percentage = (total_hours_attended / total_subject_hours) * 100
+            total_percentage += attendance_percentage
+            subject_count += 1
+        else:
+            attendance_percentage = 0
+
+        # Append data for frontend charts
+        labels.append(subject.name)
+        data.append(total_hours_attended)
+        percentages.append(round(attendance_percentage, 2))  # Round to 2 decimal places
+
+    # Calculate the overall average attendance percentage
+    avg_attendance_percentage = round(total_percentage / subject_count, 2) if subject_count > 0 else 0
+
+    return render(request, "edu/tchr_dashboard.html", {
+        "labels": labels,
+        "data": data,  # For bar chart
+        "percentages": percentages,  # For pie chart
+        "avg_attendance_percentage": avg_attendance_percentage  # Send this to frontend
+    })
+
 
 
 @login_required

@@ -82,31 +82,68 @@
 </body>
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+     document.addEventListener("DOMContentLoaded", function () {
         const ctx1 = document.getElementById("barChart").getContext("2d");
-        new Chart(ctx1, {
-            type: "bar",
-            data: {
-                labels: ["Maths", "Chemistry", "Physics", "English", "Hindi"],
-                datasets: [{
-                    label: "Hours",
-                    data: [60, 13.3, 100, 50, 80],
-                    backgroundColor: "#4A90E2"
-                }]
-            }
-        });
-
         const ctx2 = document.getElementById("pieChart").getContext("2d");
-        new Chart(ctx2, {
-            type: "pie",
-            data: {
-                labels: ["Maths", "Chemistry", "Physics", "English", "Hindi"],
-                datasets: [{
-                    data: [60, 13.3, 100, 50, 80],
-                    backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
-                }]
+
+        // Get data from Django template
+        const labels = {{ labels| safe
+    }};
+    const data = {{ data| safe }};
+    const percentages = {{ percentages| safe }};
+
+    // Bar Chart - Hours Attended
+    new Chart(ctx1, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Hours Attended (This Month)",
+                data: data,
+                backgroundColor: "#4A90E2"
+            }]
+        }
+    });
+
+    // Pie Chart - Attendance Percentage
+    new Chart(ctx2, {
+        type: "pie",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: percentages,
+                backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
+            }]
+        }
+    });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const avgAttendancePercentage = {{ avg_attendance_percentage|safe }}; // Get from Django
+    
+            function updateSpeedometer(percentage) {
+                if (percentage < 0) percentage = 0;
+                if (percentage > 100) percentage = 100;
+    
+                const progressArc = document.getElementById("progressArc");
+                const needle = document.getElementById("needle");
+                const progressText = document.getElementById("progressText");
+    
+                // Adjust stroke offset (125 is full, 0 is empty)
+                let offset = 125 - (percentage / 100) * 125;
+                progressArc.style.strokeDashoffset = offset;
+    
+                // Rotate needle (0% at left, 100% at right)
+                let angle = -90 + (percentage / 100) * 180;
+                needle.style.transform = `rotate(${angle}deg)`;
+    
+                // Update text
+                progressText.innerText = `${percentage}%`;
             }
+    
+            // Initialize the speedometer with the total attendance percentage
+            updateSpeedometer(avgAttendancePercentage);
         });
     });
+
 </script>
 </html>
