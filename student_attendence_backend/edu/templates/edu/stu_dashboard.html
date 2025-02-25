@@ -49,16 +49,24 @@
                     <canvas id="barChart"></canvas>
                 </div>
                 <div class="card">
-                    <h2>TOTAL HOURS ATTENDED OUT OF TOTAL TODAY</h2>
-                    <p><span class="down">⬇</span> SPI: <strong>0.89</strong></p>
-                    <p><span class="up">⬆</span> CPI: <strong>0.87</strong></p>
-                    <p>Planned Value: <strong>$46,666.00</strong></p>
-                    <p>Earned Value: <strong>$41,579.40</strong></p>
+                    <h2>Attendence Till Today</h2>
+                    <div class="speedometer-container">
+                        <svg class="speedometer" viewBox="0 0 100 50" width="300" height="300">
+                            <!-- Background Arc -->
+                            <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="#555" stroke-width="8" />
+                            <!-- Progress Arc -->
+                            <path id="progressArc" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="lime"
+                                stroke-width="8" stroke-dasharray="125" stroke-dashoffset="125" />
+                            <!-- Needle -->
+                            <line id="needle" x1="50" y1="50" x2="50" y2="10" stroke="red" stroke-width="3"
+                                class="needle" />
+                        </svg>
+                        <div class="progress-text" id="progressText">0%</div>
+                    </div>
+                    <button class="progress" onclick="fetchProgress()">Check Attendence</button>
                 </div>
                 <div class="card">
                     <h2>Alerts</h2>
-                    <!-- <p><strong>$93,332</strong> Total budget</p>
-                    <p><strong>$48,048</strong> Actual Cost</p> -->
                 </div>
                 <div class="card">
                     <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
@@ -77,43 +85,44 @@
         const ctx2 = document.getElementById("pieChart").getContext("2d");
 
         // Get data from Django template
-        const labels = {{ labels|safe }};
-        const data = {{ data|safe }};
-        const percentages = {{ percentages|safe }};
+        const labels = {{ labels| safe
+    }};
+    const data = {{ data| safe }};
+    const percentages = {{ percentages| safe }};
 
-        // Bar Chart - Hours Attended
-        new Chart(ctx1, {
-            type: "bar",
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: "Hours Attended (This Month)",
-                    data: data,
-                    backgroundColor: "#4A90E2"
-                }]
-            }
-        });
+    // Bar Chart - Hours Attended
+    new Chart(ctx1, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Hours Attended (This Month)",
+                data: data,
+                backgroundColor: "#4A90E2"
+            }]
+        }
+    });
 
-        // Pie Chart - Attendance Percentage
-        new Chart(ctx2, {
-            type: "pie",
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: percentages,
-                    backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
-                }]
-            }
-        });
+    // Pie Chart - Attendance Percentage
+    new Chart(ctx2, {
+        type: "pie",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: percentages,
+                backgroundColor: ["#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#9013FE"]
+            }]
+        }
+    });
 
-        //progress bar
-        document.addEventListener("DOMContentLoaded", function () {
-            let progressValue = 70; // Change this value to adjust the progress
-            const progressFill = document.getElementById("progress-fill");
+    //progress bar
+    document.addEventListener("DOMContentLoaded", function () {
+        let progressValue = 70; // Change this value to adjust the progress
+        const progressFill = document.getElementById("progress-fill");
 
-            progressFill.style.width = progressValue + "%";
-            progressFill.innerText = progressValue + "%";
-        });
+        progressFill.style.width = progressValue + "%";
+        progressFill.innerText = progressValue + "%";
+    });
     });
 </script>
 
