@@ -1,6 +1,9 @@
 from django.apps import AppConfig
 
-
 class EduConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
     name = 'edu'
+
+    def ready(self):
+        # Import signals or perform model-related operations here
+        from edu.models import create_sample_entries
+        create_sample_entries()

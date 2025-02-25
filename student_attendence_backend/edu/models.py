@@ -62,6 +62,12 @@ class Attendance(models.Model):
     def __str__(self):
         return f"{self.student.user.full_name} - {self.subject.name} - {self.date}"
 
+    def calculate_attendance_percentage(self):
+        total_subject_hours = self.subject.total_hours
+        if total_subject_hours > 0:
+            return (self.hours_attended / total_subject_hours) * 100
+        return 0
+
 # Attendance Summary Manager
 class AttendanceSummaryManager(models.Manager):
     def get_monthly_attendance(self, student, month=None, year=None):
@@ -76,3 +82,49 @@ class AttendanceSummaryManager(models.Manager):
         ).values('subject__name').annotate(total_hours=Sum('hours_attended'))
         
         return {entry['subject__name']: entry['total_hours'] for entry in attendance_data}
+
+def create_sample_entries():
+    from django.contrib.auth import get_user_model
+    from edu.models import TeacherProfile, Subject, Schedule, Attendance
+
+    User = get_user_model()
+
+    # Get the existing user for the teacher
+    teacher_user = User.objects.get(email='ashmascarenhas5@gmail.com')
+
+    # Check if a teacher profile already exists
+    if not TeacherProfile.objects.filter(user=teacher_user).exists():
+        # Create a teacher profile
+        teacher_profile = TeacherProfile.objects.create(
+            user=teacher_user,
+            employee_id='EMP001',
+            contact_details='1234567890',
+            address='123 Teacher St, Education City'
+        )
+
+        # Create a subject
+        subject = Subject.objects.create(
+            name='Mathematics',
+            code='MATH101',
+            total_hours=40
+        )
+
+        # Assign the subject to the teacher
+        teacher_profile.subjects_taught.add(subject)
+
+        # Create a schedule for the subject
+        schedule = Schedule.objects.create(
+            subject=subject,
+            teacher=teacher_profile,
+            start_time='09:00:00',
+            end_time='10:00:00',
+            day_of_week='Monday'
+        )
+
+        # Create attendance entries
+        attendance_entry = Attendance.objects.create(
+            student=student_profile,  # Assuming student_profile is already created
+            subject=subject,
+            hours_attended=1,
+            is_present=True
+        )

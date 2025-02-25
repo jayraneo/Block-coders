@@ -71,6 +71,20 @@
                 </div>
                 <div class="card">
                     <h2>Alerts</h2>
+                    <div class="alert-container">
+                        <div class="alert">
+                            <span class="alert-icon">⚠️</span> Assignment submission deadline approaching!
+                        </div>
+                        <div class="alert">
+                            <span class="alert-icon">📢</span> Chemistry class rescheduled to 3:00 PM.
+                        </div>
+                        <div class="alert">
+                            <span class="alert-icon">🛑</span> Attendance below 75%, meet the faculty for assistance.
+                        </div>
+                        <div class="alert">
+                            <span class="alert-icon">🔔</span> Workshop on AI scheduled for tomorrow at 10:00 AM.
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <h2>3D PIE CHART / SPEEDOMETER FORMAT SHOWING THE STATS MENTIONED ABOVE</h2>
@@ -87,66 +101,65 @@
         const ctx2 = document.getElementById("pieChart").getContext("2d");
 
         // Get data from Django template
-        const labels = {{ labels| safe
-    }};
-    const data = {{ data| safe }};
-    const percentages = {{ percentages| safe }};
-    const avgAttendancePercentage = {{ avg_attendance_percentage| safe }};
+        const labels = {{ labels| safe }};
+        const data = {{ data| safe }};
+        const percentages = {{ percentages| safe }};
+        const avgAttendancePercentage = {{ avg_attendance_percentage| safe }};
 
-    // Bar Chart - Hours Attended
-    new Chart(ctx1, {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "Hours Attended",
-                data: data,
-                backgroundColor: "#4A90E2"
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
+        // Bar Chart - Hours Attended
+        new Chart(ctx1, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Hours Attended",
+                    data: data,
+                    backgroundColor: "#4A90E2"
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
 
-    // Pie Chart - Attendance Percentage
-    new Chart(ctx2, {
-        type: "pie",
-        data: {
-            labels: labels,
-            datasets: [{
-                data: percentages,
-                backgroundColor: [
-                    "#4A90E2",
-                    "#50E3C2",
-                    "#F5A623",
-                    "#D0021B",
-                    "#9013FE"
-                ]
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
+        // Pie Chart - Attendance Percentage
+        new Chart(ctx2, {
+            type: "pie",
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: percentages,
+                    backgroundColor: [
+                        "#4A90E2",
+                        "#50E3C2",
+                        "#F5A623",
+                        "#D0021B",
+                        "#9013FE"
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
                 }
             }
-        }
-    });
+        });
 
-    // Update statistics in the second card
-    document.querySelector('.card:nth-child(2)').innerHTML = `
-        <h2>Attendance Statistics</h2>
-        <p>Average Attendance: <strong>${avgAttendancePercentage}%</strong></p>
-        <p>Total Subjects: <strong>${labels.length}</strong></p>
-    `;
-});
+        // Update statistics in the second card
+        document.querySelector('.card:nth-child(2)').innerHTML = `
+            <h2>Attendance Statistics</h2>
+            <p>Average Attendance: <strong>${avgAttendancePercentage}%</strong></p>
+            <p>Total Subjects: <strong>${labels.length}</strong></p>
+        `;
+    });
 </script>
 
 </html>

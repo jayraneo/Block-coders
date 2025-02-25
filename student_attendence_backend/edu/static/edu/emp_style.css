@@ -230,3 +230,29 @@ button {
 button:hover {
     background-color: #357ABD;
 }
+
+/* Alerts */
+.alert-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Increased gap between alerts */
+    margin-top: 15px;
+    text-align: left;
+}
+
+.alert {
+    background: #494976;
+    padding: 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: normal;
+    color: white;
+    justify-content: flex-start; /* Align content to the left */
+}
+
+.alert-icon {
+    margin-right: 10px;
+    font-size: 18px;
+}

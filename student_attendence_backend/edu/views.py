@@ -66,8 +66,12 @@ def student_dashboard(request):
 
 @login_required
 def teacher_dashboard(request):
-    # Get the logged-in teacher's profile
-    teacher = TeacherProfile.objects.get(user=request.user)
+    try:
+        # Get the logged-in teacher's profile
+        teacher = TeacherProfile.objects.get(user=request.user)
+    except TeacherProfile.DoesNotExist:
+        messages.error(request, "Teacher profile does not exist.")
+        return redirect("edu:teacher_dashboard")  # Redirect to a suitable page
     
     # Get subjects taught by the teacher
     subjects = Subject.objects.filter(teachers=teacher)
