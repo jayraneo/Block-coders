@@ -54,19 +54,35 @@
                     <div class="speedometer-container">
                         <svg class="speedometer" viewBox="0 0 100 50" width="300" height="300">
                             <!-- Background Arc -->
-                            <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="#555" stroke-width="8"/>
+                            <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="#555" stroke-width="8" />
                             <!-- Progress Arc -->
-                            <path id="progressArc" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="lime" stroke-width="8" stroke-dasharray="125" stroke-dashoffset="125"/>
+                            <path id="progressArc" d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="lime"
+                                stroke-width="8" stroke-dasharray="125" stroke-dashoffset="125" />
                             <!-- Needle -->
-                            <line id="needle" x1="50" y1="50" x2="50" y2="10" stroke="red" stroke-width="3" class="needle"/>
+                            <line id="needle" x1="50" y1="50" x2="50" y2="10" stroke="red" stroke-width="3"
+                                class="needle" />
                         </svg>
                         <div class="progress-text" id="progressText">0%</div>
                     </div>
-                
+
                     <button class="progress" onclick="fetchProgress()">Check Attendence</button>
                 </div>
                 <div class="card">
                     <h2>Alerts</h2>
+                    <div class="alert-container">
+                        <div class="alert">
+                            <span class="alert-icon">⚠️</span> Assignment submission deadline approaching!
+                        </div>
+                        <div class="alert">
+                            <span class="alert-icon">📢</span> Chemistry class rescheduled to 3:00 PM.
+                        </div>
+                        <div class="alert">
+                            <span class="alert-icon">🛑</span> Attendance below 75%, meet the faculty for assistance.
+                        </div>
+                        <div class="alert">
+                            <span class="alert-icon">🔔</span> Workshop on AI scheduled for tomorrow at 10:00 AM.
+                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <h2>SUBJECTWISE ATTENDANCE PERCENTAGE</h2>

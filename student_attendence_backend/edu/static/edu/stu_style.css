@@ -163,6 +163,7 @@
         padding: 15px;
         border-radius: 10px;
     }
+
     .speedometer-container {
         position: relative;
         width: 200px;
@@ -229,4 +230,33 @@
     button:hover {
         background-color: #357ABD;
     }
-    
+
+    .alert-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        /* Increased gap */
+        margin-top: 15px;
+    }
+
+
+    .alert {
+        background: #494976;
+        padding: 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: normal;
+        color: white;
+        text-align: left;
+        /* Align text to the left */
+        justify-content: flex-start;
+        /* Align items to the left */
+    }
+
+
+    .alert-icon {
+        margin-right: 10px;
+        font-size: 18px;
+    }
