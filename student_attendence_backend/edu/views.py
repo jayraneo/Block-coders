@@ -1,9 +1,11 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.utils.timezone import now
 from .models import Attendance, StudentProfile, Subject
+from django.contrib import messages
+from .models import User, StudentProfile
 
 @login_required
 def student_dashboard(request):
@@ -50,8 +52,48 @@ def student_dashboard(request):
     })
 
 
-
-
 @login_required
 def teacher_dashboard(request):
     return render(request, 'edu/tchr_dashboard.html')
+
+
+@login_required
+def stu_add(request):
+    if request.method == "POST":
+        full_name = request.POST.get("full_name")
+        roll_no = request.POST.get("roll_no")
+        date_of_birth = request.POST.get("date_of_birth")  # Format: YYYY-MM-DD
+        email = request.POST.get("email")
+        contact_details = request.POST.get("contact_details")
+        address = request.POST.get("address")
+
+        # Ensure all fields are provided
+        if not all([full_name, roll_no, date_of_birth, email, contact_details, address]):
+            messages.error(request, "All fields are required.")
+            return redirect("stu_add")
+
+        # Generate default password: roll number + birth year
+        birth_year = date_of_birth.split("-")[0]  # Extract year from YYYY-MM-DD
+        default_password = f"{roll_no}{birth_year}"
+
+        # Create the user (CustomUser)
+        user = User.objects.create_user(
+            email=email,
+            password=default_password,
+            full_name=full_name,
+            profession="student"
+        )
+
+        # Create the StudentProfile
+        StudentProfile.objects.create(
+            user=user,
+            roll_no=roll_no,
+            date_of_birth=date_of_birth,
+            contact_details=contact_details,
+            address=address
+        )
+
+        messages.success(request, "Student registered successfully! The default password is their Roll Number + Birth Year.")
+        return redirect("edu:teacher_dashboard")  # Redirect to the form page after submission
+
+    return render(request, "edu/new_stu_details.html")
